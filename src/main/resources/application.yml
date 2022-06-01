@@ -1,0 +1,24 @@
+#database: h2db
+
+
+spring:
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:file:./build/h2/dev_schema
+    username: sa
+    password:
+    #schema: classpath*:db_schema.sql
+    #data: classpath*:db_data.sql
+    # DB초기화(db_schema.sql, db_data.sql) , [always : 기동 시 매번 동작, never : 기동 시 동작하지 않음]
+    #initialization-mode: always
