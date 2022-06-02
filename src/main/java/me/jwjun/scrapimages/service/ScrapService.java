@@ -19,14 +19,14 @@ public class ScrapService {
 
     final ApplicationEventPublisher eventPublisher;
 
-    public Scrap createScrap(Long userId, CreateScrapReq req) {
+    public Scrap createScrap(CreateScrapReq req) {
         ImageInfo imageInfo = ImageInfo.builder()
                 .url(req.getUrl())
                 .isDownloaded(false)
                 .build();
 
         Scrap scrap = Scrap.builder()
-                .userId(userId)
+                .userId(req.getUserId())
                 .title(req.getTitle())
                 .description(req.getDesc())
                 .imageInfo(imageInfo)

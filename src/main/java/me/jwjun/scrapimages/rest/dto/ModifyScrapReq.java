@@ -4,6 +4,9 @@ import lombok.Data;
 
 @Data
 public class ModifyScrapReq {
+
+    private Long userId;
+
     private String title;
 
     private String desc;

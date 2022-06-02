@@ -18,17 +18,18 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/api")
 public class ScrapController {
 
     final ScrapRepository scrapRepository;
 
     final ScrapService scrapService;
 
-    @PostMapping("/{userId}/scrap")
-    public ResponseEntity<CreateScrapRes> createScrap(@PathVariable Long userId, @RequestBody CreateScrapReq req) {
-        log.info("userId:{}, req:{}", userId, req);
+    @PostMapping("/scrap/create")
+    public ResponseEntity<CreateScrapRes> createScrap(@RequestBody CreateScrapReq req) {
+        log.info("req:{}", req);
 
-        Scrap saved = scrapService.createScrap(userId, req);
+        Scrap saved = scrapService.createScrap(req);
 
         CreateScrapRes res = CreateScrapRes.builder().scrapId(saved.getScrapId()).build();
         log.info("req:{}, res:{}", req, res);
@@ -36,23 +37,22 @@ public class ScrapController {
         return ResponseEntity.ok(res);
     }
 
-    @PutMapping("/{userId}/scrap/{scrapId}")
-    public ResponseEntity<ModifyScrapRes> modifyScrap(@PathVariable Long userId, @PathVariable Long scrapId
-            , @RequestBody ModifyScrapReq req) {
-        log.info("userId:{}, scrapId:{}, req:{}", userId, scrapId, req);
-        Optional<Scrap> optScrap = scrapRepository.findByUserIdAndScrapId(userId, scrapId);
+    @PutMapping("/scrap/modify/{scrapId}")
+    public ResponseEntity<ModifyScrapRes> modifyScrap(@PathVariable Long scrapId, @RequestBody ModifyScrapReq req) {
+        log.info("scrapId:{}, req:{}", scrapId, req);
+        Optional<Scrap> optScrap = scrapRepository.findByUserIdAndScrapId(req.getUserId(), scrapId);
 
         Long resultScrapId = optScrap.map(Scrap::getScrapId).orElse(-1L);
 
         return ResponseEntity.ok(ModifyScrapRes.builder().scrapId(resultScrapId).build());
     }
 
-    @DeleteMapping("/{userId}/scrap/{scrapId}")
-    public void removeScrap(@PathVariable Long userId, @PathVariable Long scrapId){
-
+    @DeleteMapping("/scrap/remove/{scrapId}")
+    public void removeScrap(@PathVariable Long scrapId){
+        Optional<Scrap> targetScrap = scrapRepository.findById(scrapId);
     }
 
-    @GetMapping("/scrap")
+    @GetMapping("/scrap/list")
     public void listScrap(){
 
     }
