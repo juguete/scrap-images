@@ -1,4 +1,6 @@
-#database: h2db
+app.settings:
+  download-path: ./download
+
 logging:
   level:
     root: info

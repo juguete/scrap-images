@@ -7,5 +7,4 @@ import lombok.Data;
 @Builder
 public class CreateScrapRes {
     private Long scrapId;
-
 }

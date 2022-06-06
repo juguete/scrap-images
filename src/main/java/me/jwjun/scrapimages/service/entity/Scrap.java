@@ -29,4 +29,12 @@ public class Scrap extends BaseTimeEntity {
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "imageId")
     ImageInfo imageInfo;
+
+    @Column
+    Long viewCnt;
+
+    @PrePersist
+    public void init(){
+        this.viewCnt = 0L;
+    }
 }
